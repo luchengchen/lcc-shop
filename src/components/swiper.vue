@@ -1,45 +1,49 @@
 <template>
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
-    <!-- 如果需要分页器 -->
-    <div class="swiper-pagination"></div>
-    
-    <!-- 如果需要导航按钮 -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-    
-    <!-- 如果需要滚动条 -->
-    <div class="swiper-scrollbar"></div>
-  </div>
+  <swiper :options="swiperOption"  ref="mySwiper">  
+    <!-- 这部分放你要渲染的那些内容 -->  
+    <swiper-slide v-for="item in items"> 
+      <img :src="item" class="index_img">
+    </swiper-slide>  
+    <!-- 这是轮播的小圆点 -->  
+    <div class="swiper-pagination" slot="pagination"></div>  
+    </swiper>
 </template>
 <script>
-export default {
-  name: 'Swiper',
-  data () {
-    return {
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  export default{
+    name:'index',
+    components: {  
+      swiper,  
+      swiperSlide  
+    },  
+    data() {  
+      return {
+        items:['../static/bg4.jpg','../static/bg5.jpg','../static/bg7.jpg'],
+        swiperOption: {  
+          pagination: '.swiper-pagination',  
+          slidesPerView: 'auto',  
+          centeredSlides: true,  
+          paginationClickable: true,
+          onSlideChangeEnd: swiper => {  
+            //这个位置放swiper的回调方法  
+            this.page = swiper.realIndex+1;  
+            this.index = swiper.realIndex;  
+          },  
+        }, 
+          swiperSlides: [1, 2, 3, 4, 5]  
+      }  
+    },  
+   //定义这个sweiper对象  
+    computed: {  
+      swiper() {  
+        return this.$refs.mySwiper.swiper;  
+      }  
+    },  
+    mounted () {  
+      //这边就可以使用swiper这个对象去使用swiper官网中的那些方法  
+      //this.swiper.slideTo(0, 0, false);  
+    }  
     }
-  },
-  mounted(){
-    var mySwiper = new Swiper ('.swiper-container', {
-  loop: true,
-  // 如果需要分页器
-  pagination: '.swiper-pagination',
-  // 如果需要前进后退按钮
-  nextButton: '.swiper-button-next',
-  prevButton: '.swiper-button-prev',
-  // 如果需要滚动条
-  scrollbar: '.swiper-scrollbar',
-  })        
-  }
-  components: {
-    swiper,
-    swiperSlide
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -14,7 +14,6 @@
           <i class="iconfont icon-xiaoxi"></i>
         </div>
       </div>
-
       <div class="header-hot-search">
         热搜：
         <span
@@ -22,25 +21,22 @@
           :key="index"
         >{{item.name}}</span>
       </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">Slide 1</div>
-          <div class="swiper-slide">Slide 2</div>
-          <div class="swiper-slide">Slide 3</div>
-        </div>
-        <!-- 如果需要分页器 -->
-        <div class="swiper-pagination"></div>
-        <!-- 如果需要导航按钮 -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-        <!-- 如果需要滚动条 -->
-        <div class="swiper-scrollbar"></div>
+      <div>
+        <swiper>
+          <!-- 这部分放你要渲染的那些内容 -->
+          <swiper-slide v-for="(item,index) in items" :key="index">
+            <img :src="item" class="index_img">
+          </swiper-slide>
+          <!--这是轮播的小圆点-->
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'Footer',
   data () {
@@ -52,12 +48,39 @@ export default {
         {name: 'nike'},
         {name: 'converse'},
         {name: '❤'}
-      ]
+      ],
+      items: ['../static/1-1.jpg', '../static/1-2.jpg', '../static/1-3.jpg'],
+      swiperOption: {
+        pagination: '.swiper-pagination',
+        slidesPerView: 'auto',
+        autoplay: false,
+        centeredSlides: true,
+        paginationClickable: true,
+        onSlideChangeEnd: swiper => {
+          // 这个位置放swiper的回调方法
+          // this.page = swiper.realIndex + 1
+          // this.index = swiper.realIndex
+        }
+      },
+      swiperSlides: [1, 2, 3]
     }
   },
   methods: {
   },
-  mounted () {}
+  // 定义这个sweiper对象
+  computed: {
+    swiper () {
+      return this.$refs.mySwiper.swiper
+    }
+  },
+  mounted () {
+    // 这边就可以使用swiper这个对象去使用swiper官网中的那些方法
+    // this.swiper.slideTo(0, 0, false)
+  },
+  components: {
+    swiper,
+    swiperSlide
+  }
 }
 </script>
 
@@ -72,6 +95,7 @@ export default {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background: #769fd2;
+    overflow: hidden;
 }
 .header-top {
   color: #ffffff;
@@ -131,8 +155,13 @@ export default {
   box-shadow: inset 0 0 10px #dcdcdc;
 }
  .swiper-container {
-        width: 500px;
-        height: 300px;
-        margin: 20px auto;
-    }
+    width: 500px;
+    height: 121px;
+    margin: 20px auto;
+    over-flow: hidden;
+  }
+  .swiper-slide img {
+    width:100%;
+    height:20%;
+  }
 </style>
