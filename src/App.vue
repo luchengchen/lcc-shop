@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
+    <Homebody></Homebody>
     <Footer></Footer>
   </div>
 </template>
@@ -8,11 +9,13 @@
 <script>
 import Footer from '../src/components/Footer.vue'
 import Header from '../src/components/Header.vue'
+import Homebody from '../src/components/home/Homebody.vue'
 export default {
   name: 'App',
   components: {
     Footer,
-    Header
+    Header,
+    Homebody
   }
 }
 </script>

@@ -21,48 +21,64 @@
           :key="index"
         >{{item.name}}</span>
       </div>
-      <div>
-        <swiper>
-          <!-- 这部分放你要渲染的那些内容 -->
-          <swiper-slide v-for="(item,index) in items" :key="index">
-            <img :src="item" class="index_img">
-          </swiper-slide>
-          <!--这是轮播的小圆点-->
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
+    </div>
+    <div>
+      <swiper :options="swiperOption1">
+        <!-- 这部分放你要渲染的那些内容 -->
+        <swiper-slide v-for="(item,index) in items" :key="index">
+          <img :src="item" class="index_img">
+        </swiper-slide>
+        <!--这是轮播的小圆点-->
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
+    <div class="top-head-bottom">
+      <div
+        v-for="(item,index) in bottomList"
+        :key="index"
+      >
+        <i class="iconfont" :class=item.icon></i>
+        {{item.name}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import 'swiper/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'Footer',
   data () {
     return {
       searchList: [
-        {name: '粉底刷'},
+        {name: 'jordan'},
         {name: 'neo'},
         {name: 'puma'},
         {name: 'nike'},
         {name: 'converse'},
         {name: '❤'}
       ],
-      items: ['../static/1-1.jpg', '../static/1-2.jpg', '../static/1-3.jpg'],
-      swiperOption: {
+      bottomList: [
+        {name: '小鹿自营', icon: 'icon-zi1'},
+        {name: '全球直采', icon: 'icon-quanqiu'},
+        {name: '假一赔十', icon: 'icon-zheng'},
+        {name: '售后无忧', icon: 'icon-qian1'}
+      ],
+      items: ['../static/1-3.jpg', '../static/1-2.jpg', '../static/1-1.jpg'],
+      swiperOption1: {
         pagination: '.swiper-pagination',
         slidesPerView: 'auto',
-        autoplay: false,
+        autoplay: 3000,
         centeredSlides: true,
         paginationClickable: true,
         onSlideChangeEnd: swiper => {
           // 这个位置放swiper的回调方法
-          // this.page = swiper.realIndex + 1
-          // this.index = swiper.realIndex
+          this.page = swiper.realIndex + 1
+          this.index = swiper.realIndex
         }
       },
-      swiperSlides: [1, 2, 3]
+      swiperSlides1: [1, 2, 3, 4, 5]
     }
   },
   methods: {
@@ -91,9 +107,7 @@ export default {
     left: 0;
     right: 0;
     top: 0;
-    height: 30%;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    height: 31%;
     background: #769fd2;
     overflow: hidden;
 }
@@ -155,13 +169,30 @@ export default {
   box-shadow: inset 0 0 10px #dcdcdc;
 }
  .swiper-container {
-    width: 500px;
-    height: 121px;
-    margin: 20px auto;
-    over-flow: hidden;
+    width: 100%;
+    height: 131px;
+    margin: 20px auto 0px auto;
+    overflow: hidden;
   }
   .swiper-slide img {
     width:100%;
-    height:20%;
+    height:130px;
+    border-radius: 5px;
+  }
+  .swiper-wrapper {
+    height: 100%;
+  }
+  .top-head-bottom {
+    color: #ffffff;
+    display: flex;
+  }
+  .top-head-bottom div {
+    flex: 1;
+    padding: 5px 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  .top-head-bottom div i {
+    font-size: 14px;
   }
 </style>
